@@ -2,15 +2,34 @@ package com.meizu.fac.logtools;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
+    private static final String TAG = "logtools.MainActivity";
+    private static final boolean DEBUG = true;
+    Button mCatchLogButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+    }
+
+    public void initView(){
+        final LogFile logFile = new LogFileImpl();
+        mCatchLogButton = (Button)findViewById(R.id.start_catch_button);
+        mCatchLogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logFile.createLogFile();
+                log("logFile = " + logFile.createLogFile());
+            }
+        });
     }
 
     @Override
@@ -33,5 +52,11 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void log(String s){
+        if(DEBUG){
+            Log.d(TAG, s);
+        }
     }
 }
