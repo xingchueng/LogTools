@@ -47,19 +47,23 @@ public class MainActivity extends Activity {
                 handler.sendMessage(message);
             }
         });
-        String[] cmds = Commands.getCommands();
+
+        cmdTextView.setText(getTextContent());
+
+    }
+
+    public String getTextContent(){
         StringBuilder builder = new StringBuilder();
+        String[] cmds = Commands.getCommands();
         for(String s : cmds){
             builder.append(s + "\n");
         }
         builder.append("\n");
-        cmds = SystemInfo.getInfoFiles();
-        for(String s : cmds){
-            builder.append("copy file " + s + "\n");
+        cmds =  SystemInfo.getInfoFiles();
+        for (String s: cmds){
+            builder.append("copy file:" + s + "\n");
         }
-
-        cmdTextView.setText(builder.toString());
-
+        return  builder.toString();
     }
 
     @Override
