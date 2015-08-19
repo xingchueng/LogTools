@@ -32,8 +32,13 @@ public class LogFileImpl implements LogFile {
     }
 
     @Override
+    public String getLogPath() {
+        return mLogFile.getPath();
+    }
+
+    @Override
     public String getLogDir() {
-        return null;
+        return mLogFile.getParent();
     }
 
     @Override
@@ -82,6 +87,7 @@ public class LogFileImpl implements LogFile {
                 log(e.getMessage());
             }
         }
+        mLogFile = logFile;
         return logFile;
 
     }

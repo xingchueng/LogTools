@@ -11,4 +11,5 @@ public interface LogFile {
     public void getSystemInfo(File file);
     public void executeCmdResults(File file);
     public String getLogDir();
+    public String getLogPath();
 }
