@@ -1,7 +1,7 @@
 package com.meizu.fac.logtools;
 
+import android.content.Context;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -9,9 +9,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Calendar;
+import com.meizu.fac.logtools.utils.*;
+import  android.content.res.Resources;
 
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Created by zhangxing on 15-8-14.
@@ -21,12 +26,19 @@ public class LogFileImpl implements LogFile {
     private final String TAG = "logtools";
     private final boolean DEBUG = true;
     private File mLogFile = null;
+    private RunInfo runInfo;
+    private Context context;
+
+    public LogFileImpl(Context context) {
+        this.context = context;
+        this.runInfo = initRunInfo(context);
+    }
 
     @Override
     public void executeCmdResults(File file) {
-        String[] cmd = Commands.getCommands();
+        ArrayList<String> cmd = runInfo.getcmdArray();
         for(String s : cmd){
-            execCommand(s, file);
+            execCommand(s.replace("\"", ""), file);
         }
 
     }
@@ -43,10 +55,11 @@ public class LogFileImpl implements LogFile {
 
     @Override
     public void getSystemInfo(File file) {
-        String[] info = SystemInfo.getInfoFiles();
+        ArrayList<String> info = runInfo.getInfoArray();
         for(String s : info){
             try {
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(s)));
+                File f = new File(s.replace("\"",""));
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
                 String buffer = bufferedReader.readLine();
@@ -91,15 +104,31 @@ public class LogFileImpl implements LogFile {
         return logFile;
 
     }
+
+    public RunInfo getRunInfo(){
+        return runInfo;
+    }
+
+    public RunInfo initRunInfo(Context context){
+        XmlPull pull = new XmlPull();
+        RunInfo runInfo = new RunInfo();
+        try {
+            InputStream inputStream = context.getAssets().open("commands.xml");
+            runInfo = pull.parse(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e){
+            e.printStackTrace();
+        }
+        return runInfo;
+    }
+
     /*create the directory for logs.
     * /sdcard/Log/2015-08-14
     * */
     public String createLogDir(){
-        String[] month = new String[]{"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER", "UNDECIMBER"};
         File parentDir = new File(PARENTDIR);
-        Calendar calendar = Calendar.getInstance();
-        String logPath = calendar.get(Calendar.YEAR) + "_" + month[calendar.get(Calendar.MONTH)] + "_" + calendar.get(Calendar.DAY_OF_MONTH)
-                        + "_" + calendar.get(Calendar.HOUR_OF_DAY) + "_" + calendar.get(Calendar.MINUTE) + "_" + calendar.get(Calendar.SECOND);
+        String logPath = getDate();
 
         File logDir = new File(PARENTDIR + "/" + logPath);
         if(!parentDir.exists()){
@@ -112,6 +141,13 @@ public class LogFileImpl implements LogFile {
         }
 
         return logDir.getPath();
+    }
+
+    public static  String getDate(){
+        String[] month = new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUNE", "JULY", "AUG", "SEPT", "OCT", "NOV", "DEC", "UNDECIMBER"};
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR) + "_" + month[calendar.get(Calendar.MONTH)] + "_" + calendar.get(Calendar.DAY_OF_MONTH)
+                + "_" + calendar.get(Calendar.HOUR_OF_DAY) + "_" + calendar.get(Calendar.MINUTE) + "_" + calendar.get(Calendar.SECOND);
     }
 
     public void execCommand(String command, File file){

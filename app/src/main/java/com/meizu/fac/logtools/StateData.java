@@ -9,7 +9,7 @@ import java.util.Observable;
  * Created by zhangxing on 15-8-19.
  */
 public class StateData extends Observable{
-    private String state;
+    private int state;
     private boolean changed;
 
     public StateData() {
@@ -21,12 +21,12 @@ public class StateData extends Observable{
         Log.d("logtools", "invoked stateChanged()");
     }
 
-    public void setSTate(String state){
+    public void setSTate(int state){
         this.state = state;
         stateChanged();
     }
 
-    public String getState(){
+    public int getState(){
         return state;
     }
 

@@ -1,5 +1,10 @@
 package com.meizu.fac.logtools;
 
+import android.content.Context;
+
+import com.meizu.fac.logtools.utils.RunInfo;
+import com.meizu.fac.logtools.utils.XmlPull;
+
 import java.io.File;
 
 /**
@@ -12,4 +17,6 @@ public interface LogFile {
     public void executeCmdResults(File file);
     public String getLogDir();
     public String getLogPath();
+    public RunInfo initRunInfo(Context context);
+    public RunInfo getRunInfo();
 }
