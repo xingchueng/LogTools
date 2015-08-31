@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import com.meizu.fac.logtools.utils.*;
-import  android.content.res.Resources;
 
 import org.xmlpull.v1.XmlPullParserException;
 

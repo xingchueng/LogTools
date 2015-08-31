@@ -67,7 +67,6 @@ public class MainActivity extends Activity {
 
     public void initView(){
         logFile = new LogFileImpl(this);
-        logFile = new LogFileImpl(this);
         TextView cmdTextView = (TextView)findViewById(R.id.cmd_textview);
         statusTextView = (TextView)findViewById(R.id.log_status);
         mCatchLogButton = (Button)findViewById(R.id.start_catch_button);
@@ -138,7 +137,7 @@ public class MainActivity extends Activity {
     public static void setText(int res){
 
         TextView tv = getStatusTextView();
-        tv.setText(STATE_STRING[res] + " : " +LogFileImpl.getDate());
+        tv.setText(STATE_STRING[res] + " : " + LogFileImpl.getDate());
         tv.setTextColor(Color.RED);
     }
 
