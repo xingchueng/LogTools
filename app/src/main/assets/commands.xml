@@ -6,23 +6,7 @@
         <command>"/system/bin/logcat -v threadtime -d"</command>
         <command>"/system/bin/logcat -v threadtime -b radio -d"</command>
         <command>"/system/bin/logcat -v threadtime -b events -d"</command>
-        <command>"/system/bin/dmesg"</command>
-        <command>"/system/bin/dumpsys power"</command>
-        <command>"/system/bin/dumpsys alarm"</command>
-        <command>"/system/bin/dumpsys battery"</command>
-        <command>"/system/bin/dumpsys batteryinfo"</command>
-        <command>"/system/bin/dumpsys cpuinfo"</command>
-        <command>"/system/bin/dumpsys meminfo"</command>
-        <command>"/system/bin/dumpsys netpolicy"</command>
-        <command>"/system/bin/dumpsys netstats --full --uid"</command>
-        <command>"/system/bin/dumpsys SurfaceFlinger"</command>
-        <command>"/system/bin/dumpsys wifi"</command>
         <command>"/system/bin/ps -t"</command>
-        <command>"/system/bin/cat /sys/devices/platform/soc-audio.0/reg_program"</command>
-        <command>"/system/bin/cat /sys/fs/pstore/console-ramoops"</command>
-        <command>"/system/bin/cat /sys/fs/pstore/dmesg-ramoops-0"</command>
-        <command>"/system/bin/cat /sys/fs/pstore/dmesg-ramoops-1"</command>
-        <command>"/system/bin/cat /sys/fs/pstore/ftrace-ramoops"</command>
     </commands>
     <infos>
         <info>"/proc/version"</info>
@@ -31,11 +15,5 @@
         <info>"/proc/last_kmsg"</info>
         <info>"/proc/reset_reason"</info>
         <info>"/data/anr/traces.txt"</info>
-        <info>"/data/ril.log"</info>
-        <info>"/data/ril_miss.log"</info>
-        <info>"/data/ril_sn.log"</info>
-        <info>"/data/battery_soc.txt"</info>
-        <info>"/cache/recovery/last_install"</info>
-        <info>"/cache/recovery/last_log"</info>
     </infos>
 </resources>
